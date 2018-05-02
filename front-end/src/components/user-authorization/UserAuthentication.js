@@ -6,13 +6,13 @@ export default function (ComposedComponent) {
   class UserAuthentication extends Component {
     componentWillMount() {
       if (!this.props.authenticated) {
-        this.props.history.push('/logout');
+        this.props.history.push('/login');
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!nextProps.authenticated) {
-        this.props.history.push('/logout');
+        this.props.history.push('/login');
       }
     }
 

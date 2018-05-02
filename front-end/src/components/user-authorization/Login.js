@@ -5,12 +5,10 @@ import { connect } from 'react-redux'
 
 class Login extends Component {
 
-  // fires action creator (username + password for token) 
   submit = (values) => {
-    this.props.logInAction(values, this.props.history);
+    this.props.dispatch(logInAction(values, this.props.history));
   }
 
-  // receives error as a props from action
   errorMessage() {
     if (this.props.errorMessage) {
       return (
@@ -24,35 +22,67 @@ class Login extends Component {
   render() {
     const {handleSubmit} = this.props;
     return (
-      <div className="centered-container">
-          <h2>Log In</h2>
-          <form onSubmit={handleSubmit(this.submit)}>
-            <div className="field-group">
-            <Field 
-              name="username"
-              component="input"
-              type="text"
-              placeholder="Username"/>
-            <Field
-              name="password"
-              component="input"
-              type="password"
-              placeholder="Password"/>
-            <button type="submit" className="green-button">Sign In</button>
-            </div>
-          </form>
-          {this.errorMessage()}
+      <body class="hold-transition login-page">
+      <div class="login-box">
+      <div class="login-logo">
+        <a href=""><b>e</b>Tracker</a>
       </div>
+      <div class="login-box-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+        
+        <form onSubmit={handleSubmit(this.submit.bind(this))}>
+        
+        {this.errorMessage()}
+          
+          <div class="form-group has-feedback">
+            <Field name="username" className="form-control" component="input" type="text" />
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          </div>
+          
+          <div class="form-group has-feedback"> 
+            <Field name="password" className="form-control" component="input" type="password" />
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="checkbox icheck">
+                <label>
+                  <input type="checkbox"/> Remember Me
+                </label>
+              </div>
+            </div>
+            
+            <div class="col-xs-4">
+              <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+            </div>
+           
+          </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+        Facebook</a>
+      <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+        Google+</a>
+    </div>
+
+    <a href="#">I forgot my password</a><br/>
+    <a href="register.html" class="text-center">Register a new membership</a>
+    
+      </div>
+    </div>
+    </body>
     );
   }
 }
 
-// access to Redux store (will be called every time store is updated)
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
+const mapStateToProps = (state) => {
+  return { 
+    errorMessage: state.auth.error 
+  };
 }
 
-// connecting reduxFormLogin and Login component with action creators
 const reduxFormLogin = reduxForm({form: 'login'})(Login);
-
-export default connect(mapStateToProps, {logInAction})(reduxFormLogin);
+export default connect(mapStateToProps)(reduxFormLogin);

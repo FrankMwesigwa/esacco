@@ -17,7 +17,7 @@ export function logInAction({
 
       dispatch({type: AUTHENTICATED});
       localStorage.setItem('user', res.data.token);
-      history.go('/books');
+      history.go('/');
     } catch (error) {
       dispatch({
         type: AUTHENTICATION_ERROR,
